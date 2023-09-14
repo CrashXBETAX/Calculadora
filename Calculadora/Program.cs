@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Calculadora
@@ -16,17 +15,15 @@ namespace Calculadora
             filaOperacoes.Enqueue(new Operacoes { valorA = 18, valorB = 3, operador = '/' }); //Implemente o calculo de divisao
 
             Calculadora calculadora = new Calculadora();
-
-            
-            while (filaOperacoes.Count >= 0)
+            Imprime imprimePendentes = new Imprime(filaOperacoes);
+            // Optei por usar foreach em vez de while porque acredito que programar um código mais claro e legível é importante, seguindo o princípio Clean Code da "Clareza". Além disso, o foreach raramente causa loops infinitos, ao contrário do while, que é mais propenso a erros.
+            foreach (Operacoes operacao in filaOperacoes)
             {
-                Operacoes operacao = filaOperacoes.Peek();
-                calculadora.calcular(operacao);
-                Console.WriteLine("{0} {1} {2} = {3}", operacao.valorA,operacao.operador,operacao.valorB, operacao.resultado);
+                imprimePendentes.ImprimePendentes();
+                calculadora.Calcular(operacao);
+                Imprime.ImprimeResultado(operacao);
             }
-
-          
-           
+            Imprime.RetireStack();
         }
     }
 }
